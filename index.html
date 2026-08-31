@@ -19,7 +19,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&family=DM+Serif+Display:ital@1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&family=DM+Serif+Display:ital@1&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&family=DM+Serif+Display:ital@1&display=swap" rel="stylesheet"></noscript>
 
 <script type="application/ld+json">
 {
@@ -2874,105 +2875,6 @@ body.dark-theme .hero .badge-status .dot{
 
 
 <style>
-/* ==========================================================
-   PRELOADER — LARISSA KETELEN
-========================================================== */
-#lkPreloader{
-  position:fixed;
-  inset:0;
-  z-index:2147483646;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#FBF8F2;
-  opacity:1;
-  visibility:visible;
-  transition:opacity .55s ease, visibility .55s ease;
-}
-#lkPreloader.is-hidden{
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-}
-.lk-preloader-inner{
-  width:min(92vw,420px);
-  text-align:center;
-  transform:translateY(-2vh);
-}
-.lk-preloader-brand{
-  font-family:var(--font-heading);
-  font-size:.78rem;
-  font-weight:800;
-  letter-spacing:.12em;
-  color:#071A2F;
-  margin-bottom:22px;
-}
-.lk-preloader-percent{
-  font-family:var(--font-heading);
-  font-weight:800;
-  font-size:clamp(4.4rem,10vw,7rem);
-  line-height:.9;
-  letter-spacing:-.06em;
-  color:#071A2F;
-  margin-bottom:26px;
-}
-.lk-preloader-percent span{
-  color:#2563EB;
-  font-size:.48em;
-  vertical-align:top;
-  margin-left:2px;
-}
-.lk-preloader-bar{
-  width:100%;
-  height:3px;
-  background:#DCE3EC;
-  overflow:hidden;
-  border-radius:999px;
-  margin-bottom:16px;
-}
-.lk-preloader-bar > i{
-  display:block;
-  width:0%;
-  height:100%;
-  background:#2563EB;
-  border-radius:inherit;
-  transition:width .12s linear;
-}
-.lk-preloader-kicker{
-  font-family:var(--font-heading);
-  font-size:.62rem;
-  font-weight:700;
-  letter-spacing:.13em;
-  color:#5C697B;
-  text-transform:uppercase;
-}
-
-/* mantém o conteúdo estável enquanto a tela inicial aparece */
-body.lk-preloading{
-  overflow:hidden !important;
-}
-body.lk-preloading main,
-body.lk-preloading header,
-body.lk-preloading footer,
-body.lk-preloading .whatsapp-float,
-body.lk-preloading .mobile-sticky-bar{
-  visibility:hidden;
-}
-
-/* modo escuro só entra depois, mas o preloader permanece claro por design */
-@media (max-width:620px){
-  .lk-preloader-inner{width:min(86vw,360px);}
-  .lk-preloader-brand{font-size:.68rem;}
-  .lk-preloader-kicker{font-size:.54rem;line-height:1.5;}
-}
-@media (prefers-reduced-motion:reduce){
-  #lkPreloader{transition:none;}
-  .lk-preloader-bar > i{transition:none;}
-}
-</style>
-
-
-<style>
 /* Modo escuro: palavras do card de código da hero em preto */
 body.dark-theme .code-card,
 body.dark-theme .code-card *,
@@ -3018,16 +2920,7 @@ body.dark-theme .hero .build-code-panel .lk-code-label{
 </style>
 
 </head>
-<body class="lk-preloading">
-
-<div id="lkPreloader" aria-hidden="true">
-  <div class="lk-preloader-inner">
-    <div class="lk-preloader-brand">LARISSA KETELEN</div>
-    <div class="lk-preloader-percent"><b id="lkPreloaderNumber">0</b><span>%</span></div>
-    <div class="lk-preloader-bar"><i id="lkPreloaderProgress"></i></div>
-    <div class="lk-preloader-kicker">Design • <span class="lk-code-label">Estratégia</span> • Desenvolvimento</div>
-  </div>
-</div>
+<body>
 
 
 <div id="lkCursorRing" aria-hidden="true"></div>
@@ -4280,73 +4173,6 @@ body.dark-theme .hero .build-code-panel .lk-code-label{
 })();
 </script>
 
-
-<script>
-(function(){
-  const body = document.body;
-  const loader = document.getElementById('lkPreloader');
-  const number = document.getElementById('lkPreloaderNumber');
-  const progress = document.getElementById('lkPreloaderProgress');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if(!loader || !number || !progress) return;
-
-  /* Mostra uma vez por sessão. */
-  const alreadySeen = sessionStorage.getItem('lk-preloader-seen') === '1';
-  if(alreadySeen){
-    loader.remove();
-    body.classList.remove('lk-preloading');
-    return;
-  }
-
-  body.classList.add('lk-preloading');
-
-  if(reduceMotion){
-    number.textContent = '100';
-    progress.style.width = '100%';
-    sessionStorage.setItem('lk-preloader-seen','1');
-    body.classList.remove('lk-preloading');
-    loader.remove();
-    return;
-  }
-
-  const duration = 1750;
-  const start = performance.now();
-
-  function easeOutCubic(t){
-    return 1 - Math.pow(1 - t, 3);
-  }
-
-  function frame(now){
-    const elapsed = now - start;
-    const raw = Math.min(elapsed / duration, 1);
-    const eased = easeOutCubic(raw);
-    const value = Math.min(100, Math.floor(eased * 100));
-
-    number.textContent = value;
-    progress.style.width = value + '%';
-
-    if(raw < 1){
-      requestAnimationFrame(frame);
-    }else{
-      number.textContent = '100';
-      progress.style.width = '100%';
-
-      setTimeout(function(){
-        sessionStorage.setItem('lk-preloader-seen','1');
-        loader.classList.add('is-hidden');
-        body.classList.remove('lk-preloading');
-
-        setTimeout(function(){
-          loader.remove();
-        }, 600);
-      }, 220);
-    }
-  }
-
-  requestAnimationFrame(frame);
-})();
-</script>
 
 </body>
 </html>
