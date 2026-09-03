@@ -2919,6 +2919,39 @@ body.dark-theme .hero .build-code-panel .lk-code-label{
 }
 </style>
 
+<style>
+/* Enquadramento integral da prévia Heitor Leal no desktop */
+@media (min-width:901px){
+  #solucao .solution-visual{
+    height:auto !important;
+    min-height:0 !important;
+    align-self:center;
+  }
+  #solucao .solution-live-site{
+    height:auto !important;
+    aspect-ratio:960 / 697;
+    display:flex !important;
+    flex-direction:column;
+  }
+  #solucao .solution-site-frame-wrap{
+    width:100%;
+    height:auto !important;
+    aspect-ratio:960 / 659;
+    flex:none;
+    overflow:hidden;
+  }
+  #solucao .solution-site-frame-wrap img{
+    position:static !important;
+    inset:auto !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    object-position:top center !important;
+    transform:none !important;
+    transform-origin:center !important;
+  }
+}
+</style>
 </head>
 <body>
 
