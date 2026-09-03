@@ -2969,6 +2969,38 @@ body.dark-theme .hero .build-code-panel .lk-code-label{
   background:#050505 !important;
 }
 </style>
+<style>
+/* Exibe a captura desktop inteira também dentro do mockup grande no mobile. */
+@media (max-width:900px){
+  #solucao .solution-visual{
+    height:auto !important;
+    min-height:0 !important;
+  }
+  #solucao .solution-live-site{
+    height:auto !important;
+    aspect-ratio:960 / 697;
+    display:flex !important;
+    flex-direction:column;
+  }
+  #solucao .solution-site-frame-wrap{
+    width:100%;
+    height:auto !important;
+    aspect-ratio:960 / 659;
+    flex:none;
+    overflow:hidden;
+  }
+  #solucao .solution-site-frame-wrap img{
+    position:static !important;
+    inset:auto !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    object-position:top center !important;
+    transform:none !important;
+    transform-origin:center !important;
+  }
+}
+</style>
 </head>
 <body>
 
